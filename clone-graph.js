@@ -20,8 +20,9 @@
 
 /**
  * Depth-First-Search: we look at a node, and then at it's neighbors, and their neighbors, until we've looked/copied all of them
+ * Solution Time Complexity is O(E+V) where E = n of edges and V = n of vertices
  */
-var cloneGraph = function (node) {
+var cloneGraph = (node) => {
   // edge case
   if (node === null) {
     return null;
