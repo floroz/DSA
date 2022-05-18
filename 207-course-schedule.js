@@ -25,9 +25,21 @@
 // // This problem is about detecting whether the Directed Graph has a cycle
 // The problem to determine if one could build a valid schedule of courses that satisfies all the dependencies (i.e. constraints) would be equivalent to determine if the corresponding graph is a DAG (Directed Acyclic Graph), i.e. there is no cycle existed in the graph.
 
+/**
+ * 
+Complexity
+
+Time Complexity: O(V+E) where V is the number of courses, and E is the number of dependencies.
+
+As in the previous algorithm, it would take us E time complexity to build a graph in the first step.
+Since we perform a postorder DFS traversal in the graph, we visit each vertex and each edge once and only once in the worst case, i.e. E + V.
+
+Space Complexity: O(V+E), with the same denotation as in the above time complexity.
+ */
+
 export const canFinish = (numCourses, prerequisites) => {
   /**
-   * Create an adjecency hashmap to keep track of all the prerequisite for each course
+   * Create a Graph expressed as an adjecency hashmap data structure to keep track of all the prerequisite for each course
    * Example:
    *
    * Map {
@@ -40,12 +52,12 @@ export const canFinish = (numCourses, prerequisites) => {
    *
    *  }
    */
-  const adjecentyHashmap = new Map();
+  const graph = new Map();
 
   /**
    * We need to be able to detect where the circular depedency occurs. To do that, we need to add to our set the course we are visiting, and for every new course we check, if the course is already present in the set, it means we've already encoutered it and therefore we've hit a circular dependency.
    */
-  const visitedSet = new Set();
+  const visited = new Set();
 
   /**
    * This Depth First Search allows us to look at the connected verteces and their edges, and to keep track of our visited verteces.
@@ -58,15 +70,15 @@ export const canFinish = (numCourses, prerequisites) => {
    */
   const dfs = (course) => {
     // base case #1
-    if (visitedSet.has(course)) return false;
+    if (visited.has(course)) return false;
     // base case #2
-    if (adjecentyHashmap.get(course) === []) return true;
+    if (graph.get(course) === []) return true;
 
     // at this point we're visiting something new, so we keep track of it
-    visitedSet.add(course);
+    visited.add(course);
 
     // we look through all the prerequisites and run recursive check
-    for (let pre of adjecentyHashmap.get(course)) {
+    for (let pre of graph.get(course)) {
       // if we encounter any false value, there is a cycle inside one of this prereqs
       if (!dfs(pre)) return false;
     }
@@ -74,10 +86,10 @@ export const canFinish = (numCourses, prerequisites) => {
     // if we reached this point, then we've checked successfuly that the course can be completed
 
     // we can remove it from our set
-    visitedSet.remove(course);
+    visited.remove(course);
 
     // we can reset the prerequisites as they've been verified
-    adjecentyHashmap.set(course, []);
+    graph.set(course, []);
 
     // and complete our dfs
     return true;
@@ -85,7 +97,7 @@ export const canFinish = (numCourses, prerequisites) => {
 
   // we build our hashmap
   for (let i = 0; i < prerequisites.length; i++) {
-    adjecentyHashmap.set(i, prerequisites[i]);
+    graph.set(i, prerequisites[i]);
   }
 
   // we run the dfs for each course
