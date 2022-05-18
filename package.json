@@ -1,0 +1,10 @@
+{
+  "name": "ds-algo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Daniele Tortora <contact@danieletortora.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^28.1.0"
+  }
+}
