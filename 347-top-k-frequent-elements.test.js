@@ -11,11 +11,6 @@
 // Input: nums = [1], k = 1
 // Output: [1]
 
-/**
- * @param {number[]} nums
- * @param {number} k
- * @return {number[]}
- */
 var topKFrequent = function (nums, k) {
   // O(N) memory
   const map = {};
@@ -49,8 +44,77 @@ var topKFrequent = function (nums, k) {
   return res;
 };
 
+// Complexity Analysis
+
+// Time complexity : \mathcal{O}(N \log k)O(Nlogk) if k < Nk<N and \mathcal{O}(N)O(N) in the particular case of N = kN=k. That ensures time complexity to be better than \mathcal{O}(N \log N)O(NlogN).
+
+// Space complexity : \mathcal{O}(N + k)O(N+k) to store the hash map with not more NN elements and a heap with kk elements.
+var topKFrequent_Min_Heap = function (nums, k) {
+  // O(N) memory
+  const map = {};
+
+  if (nums.length < 1) return [];
+
+  // O(N)
+  for (let num of nums) {
+    const key = String(num);
+    map[key] = map[key] ? map[key] + 1 : 1;
+  }
+
+  const entries_queue = Object.entries(map);
+
+  const min_heap = [entries_queue.shift()];
+
+  while (entries_queue.length > 0) {
+    // add to the heap the first element in the queue
+    min_heap.push(entries_queue.shift());
+
+    while (true) {
+      // get the new index from the elemenet just added
+      const childIdx = min_heap.length - 1;
+      // find parent index
+      const parentIdx = Math.ceil(childIdx / 2 - 1);
+
+      // compare the child freq with the parent freq
+      const child = min_heap[childIdx];
+      const parent = min_heap[parentIdx];
+
+      if (!parent) break;
+
+      const isChildFreqLessThanParent = parent[1] > child[1];
+      const isChildKeyEqualToParent = parent[1] === child[1];
+      const isParentKeyGreaterThanChildKey = parent[0] > child[0];
+
+      if (
+        isChildFreqLessThanParent ||
+        (isChildKeyEqualToParent && isParentKeyGreaterThanChildKey)
+      ) {
+        // the rule of min heap requires the parent to be smaller than the child
+        // swap items
+        min_heap[childIdx] = parent;
+        min_heap[parentIdx] = child;
+      } else {
+        break;
+      }
+    }
+
+    if (min_heap.length > k) {
+      min_heap.shift();
+    }
+  }
+
+  return min_heap.map((entry) => +entry[0]);
+};
+
 test("topKFrequent", () => {
   expect(topKFrequent([1, 1, 1, 2, 2, 3], 2)).toStrictEqual([1, 2]);
   expect(topKFrequent([1], 2)).toStrictEqual([1]);
   expect(topKFrequent([4, 1, -1, 2, -1, 2, 3], 2)).toStrictEqual([-1, 2]);
+});
+test("topKFrequent_Min_Heap", () => {
+  // expect(topKFrequent_Min_Heap([1, 1, 1, 2, 2, 3], 2)).toStrictEqual([1, 2]);
+  // expect(topKFrequent_Min_Heap([1], 2)).toStrictEqual([1]);
+  expect(topKFrequent_Min_Heap([4, 1, -1, 2, -1, 2, 3], 2)).toStrictEqual([
+    -1, 2,
+  ]);
 });
