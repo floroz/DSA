@@ -12,7 +12,7 @@ var maxDepth = function (binary) {
   const dfs = (i) => {
     if (!binary[i]) return 0;
 
-    return Math.max(dfs(binary[i * 2 + 1]), dfs(binary[i * 2 + 1])) + 1;
+    return Math.max(dfs(i * 2 + 1), dfs(i * 2 + 1)) + 1;
   };
 
   return dfs(0) + 1;
