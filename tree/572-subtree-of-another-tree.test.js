@@ -18,44 +18,51 @@ import { convertArrayToTree } from "./utils/transformer";
  * @param {TreeNode} subRoot
  * @return {boolean}
  */
-var isSubtree = function (root, subRoot) {
-  if (!subRoot) return true;
-  if (!root && subRoot) return false;
+var isSubtree = function (root, sub) {
+  if (!root) return !sub;
 
-  const isSameTree = (node1, node2) => {
-    // valid only if both nodes are null (they're the same)
-    if (!node1 || !node2) return !node1 && !node2;
-
-    // values don't match
-    if (node1.val !== node2.val) return false;
-
-    // values match, let's compare the branches on both sides
-    return (
-      isSameTree(node1.left, node2.left) && isSameTree(node1.right, node2.right)
-    );
-  };
-
-  if (isSameTree(root, subRoot)) {
-    return true;
-  }
-
-  return isSameTree(root.left, subRoot) || isSameTree(root.right, subRoot);
+  return (
+    // we first check if the tree match from the root node
+    isEqual(root, sub) ||
+    // if it doesn't we start dfs on both branches
+    isSubtree(root.left, sub) ||
+    isSubtree(root.right, sub)
+  );
 };
 
-test("1- isSubtree", () => {
-  const input1 = convertArrayToTree([3, 4, 5, 1, 2]);
-  const input2 = convertArrayToTree([4, 1, 2]);
-  expect(isSubtree(input1, input2)).toBe(true);
-});
+function isEqual(root1, root2) {
+  if (!root1 || !root2) return !root1 && !root2;
+  if (root1.val !== root2.val) return false;
+  return isEqual(root1.left, root2.left) && isEqual(root1.right, root2.right);
+}
 
-test("2 - isSubtree", () => {
-  const input1 = convertArrayToTree([1, 1]);
-  const input2 = convertArrayToTree([1]);
-  expect(isSubtree(input1, input2)).toBe(true);
-});
+describe("all", () => {
+  test("1- isSubtree", () => {
+    const input1 = convertArrayToTree([3, 4, 5, 1, 2]);
+    const input2 = convertArrayToTree([4, 1, 2]);
+    expect(isSubtree(input1, input2)).toBe(true);
+  });
 
-test("3- isSubtree", () => {
-  const input1 = convertArrayToTree([3, 4, 5, 1, 2, null, null, null, null, 0]);
-  const input2 = convertArrayToTree([4, 1, 2]);
-  expect(isSubtree(input1, input2)).toBe(false);
+  test("2 - isSubtree", () => {
+    const input1 = convertArrayToTree([1, 1]);
+    const input2 = convertArrayToTree([1]);
+    expect(isSubtree(input1, input2)).toBe(true);
+  });
+
+  test("3- isSubtree", () => {
+    const input1 = convertArrayToTree([
+      3,
+      4,
+      5,
+      1,
+      2,
+      null,
+      null,
+      null,
+      null,
+      0,
+    ]);
+    const input2 = convertArrayToTree([4, 1, 2]);
+    expect(isSubtree(input1, input2)).toBe(false);
+  });
 });
