@@ -1,4 +1,4 @@
-class TreeNode {
+export class TreeNode {
   constructor({ val, left, right }) {
     this.val = val;
     this.left = left;
@@ -7,7 +7,7 @@ class TreeNode {
 }
 
 /**
- * Converts a Binary Tree from an Array to a TreeNode
+ * Converts a Binary Tree from an Array to a TreeNode using BFS
  */
 export const convertArrayToTree = (arr) => {
   const dfs = (i, arr) => {
