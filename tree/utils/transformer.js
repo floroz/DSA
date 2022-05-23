@@ -1,8 +1,8 @@
 export class TreeNode {
-  constructor({ val, left, right }) {
+  constructor(val) {
     this.val = val;
-    this.left = left;
-    this.right = right;
+    this.left = null;
+    this.right = null;
   }
 }
 
@@ -13,13 +13,11 @@ export const convertArrayToTree = (arr) => {
   const dfs = (i, arr) => {
     const val = arr[i];
 
-    if (!val) return null;
+    if (val === null || val === undefined) return null;
 
-    const newNode = new TreeNode({
-      val,
-      left: dfs(i * 2 + 1, arr),
-      right: dfs(i * 2 + 2, arr),
-    });
+    const newNode = new TreeNode(val);
+    newNode.left = dfs(i * 2 + 1, arr);
+    newNode.right = dfs(i * 2 + 2, arr);
 
     return newNode;
   };
