@@ -6,52 +6,6 @@
 // Input: matrix = [[1,2,3],[4,5,6],[7,8,9]]
 // Output: [1,2,3,6,9,8,7,4,5]
 
-[
-  [1, 2, 3],
-  [4, 5, 6],
-  [7, 8, 9],
-];
-
-function spiralOrder(matrix) {
-  if (!matrix || !matrix.length || !matrix[0].length) return [];
-
-  const res = [];
-
-  const goTo = (matrix, row, col) => {
-    const rows = matrix.length;
-    const cols = matrix[0].lenght;
-
-    if (row < 0 || col < 0 || col >= cols || row >= rows) {
-      return;
-    }
-
-    if (row > rows) {
-      // go left
-    } else if (col > cols) {
-      // go down
-    } else if (row < 0) {
-      // go right
-    } else if (col < 0) {
-      // go up
-    } else {
-    }
-
-    const cell = matrix[row][col];
-
-    res.push(cell);
-    matrix[row][col] = "*";
-
-    goTo(row, col + 1);
-    goTo(row + 1, col);
-    goTo(row, col - 1);
-    goTo(row - 1, col);
-  };
-
-  goTo(matrix, 0, 0);
-
-  return res;
-}
-
 function spiralOrder_iterative1(matrix) {
   if (matrix.length < 1) return [];
 
@@ -130,17 +84,6 @@ function spiralOrder_iterative2(matrix) {
 
   return res;
 }
-
-test("recursion", () => {
-  expect(
-    spiralOrder([
-      [1, 2, 3, 4],
-      [5, 6, 7, 8],
-      [9, 10, 11, 12],
-      [13, 14, 15, 16],
-    ])
-  ).toStrictEqual([1, 2, 3, 4, 8, 12, 16, 15, 14, 13, 9, 5, 6, 7, 11, 10]);
-});
 
 test("iterative1", () => {
   expect(
