@@ -12,65 +12,35 @@
 import { convertTreeToArray, TreeNode } from "./utils/transformer";
 
 /**
- * @param {number[]} preorder
- * @param {number[]} inorder
- * @return {TreeNode}
+ * 
+ * The two key observations are:
+
+Preorder traversal follows Root -> Left -> Right, therefore, given the preorder array preorder, we have easy access to the root which is preorder[0].
+
+Inorder traversal follows Left -> Root -> Right, therefore if we know the position of Root, we can recursively split the entire array into two subtrees.
+
+Now the idea should be clear enough. We will design a recursion function: it will set the first element of preorder as the root, and then construct the entire tree. To find the left and right subtrees, it will look for the root in inorder, so that everything on the left should be the left subtree, and everything on the right should be the right subtree. Both subtrees can be constructed by making another recursion call.
+
+It is worth noting that, while we recursively construct the subtrees, we should choose the next element in preorder to initialize as the new roots. This is because the current one has already been initialized to a parent node for the subtrees.
  */
 var buildTree = function (preorder, inorder) {
   if (!preorder || !inorder || !inorder.length) return null;
 
-  const root = preorder.shift();
+  const node = new TreeNode(preorder[0]);
 
-  const midpoint = inorder.indexOf(root);
+  const midpoint = inorder.indexOf(preorder[0]);
 
-  const left = inorder.slice(0, midpoint);
-  const right = inorder.slice(midpoint + 1);
+  const leftPreorder = preorder.slice(1, midpoint + 1);
+  const rightPreorder = preorder.slice(midpoint + 1);
 
-  const node = new TreeNode(root);
+  const leftInorder = inorder.slice(0, midpoint);
+  const rightInorder = inorder.slice(midpoint + 1);
 
-  node.left = buildTree(preorder, left);
-  node.right = buildTree(preorder, right);
+  node.left = buildTree(leftPreorder, leftInorder);
+  node.right = buildTree(rightPreorder, rightInorder);
 
   return node;
 };
-
-// // first call
-// preorder = [3, 9, 20, 15, 7];
-// inorder = [9, 3, 15, 20, 7];
-
-// root = 3;
-// binary = [3]; // add to binary
-// left = [9]
-// right = [15, 20, 7]
-
-// // second call left
-// preorder = [9, 20, 15, 7];
-// inorder = [];
-
-// root = 9; // add to binary
-// binary = [3, 9];
-
-// left = [] // no left? push null
-// right = [] // no right? push null
-// binary = [3,9,null, null]
-
-// // second call right
-// preorder = [20, 15, 7];
-// inorder = [15, 20, 7];
-
-// root = 9;
-// left = []
-// right = [15, 20, 7]
-
-// binary = [3, 9];
-
-// // third call
-// preorder = [->20, 15, 7];
-// inorder = [9, 3, 15, 20, 7];
-
-// root = 20;
-
-// binary = [3, 9];
 
 test("should first", () => {
   expect(
