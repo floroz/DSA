@@ -5,40 +5,39 @@
  * @param {number} k
  * @return {number}
  */
-var characterReplacement = function (s, k) {
-  let res = 0;
-  let count = 0;
-  let errors = k;
+const characterReplacement = (str, k) => {
+  const charCount = {};
+  let maxWindow = 0;
+  let maxCharCount = 0;
+  let left = 0;
 
-  for (let i = 0; i < s.length; i++) {
-    let j = i;
+  for (let right = 0; right < str.length; right++) {
+    // next character we're looking at
+    const char = str[right];
+    // update the count of the char
+    charCount[char] = charCount[char] ? charCount[char] + 1 : 1;
 
-    let char = s.charAt(i);
+    if (charCount[char] > maxCharCount) maxCharCount = charCount[char];
 
-    while (j < s.length) {
-      if (s.charAt(j) === char) {
-        // we've got a match
-        count++;
-        j++;
-      } else {
-        // we don't have a match
-        // let's check if we can swap using errors k
-        if (errors) {
-          count++;
-          errors--;
-          j++;
-        } else {
-          // otherwise we exit
-          break;
-        }
-      }
+    // if the difference between the size of the window, and the
+    // occurrances of our most present character is greater than K
+    // it means the window is not valid
+    // Example: window is 'AAABAC' and K = 1
+    // The length is 6, the max occurance is 4 (four times 'A')
+    // Then (6 - 4) = 2   ---> 2 > K ---> true
+    // The window would not be valid
+    while (right - left + 1 - maxCharCount > k) {
+      // let's decrease the occurances of the left element
+      // and shift our left pointer forward
+      charCount[str[left]]--;
+      left++;
     }
-    res = Math.max(count, res);
-    errors = k;
-    count = 0;
+
+    // update window size
+    maxWindow = Math.max(maxWindow, right - left + 1);
   }
 
-  return res;
+  return maxWindow;
 };
 
 test("characterReplacement", () => {
