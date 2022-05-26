@@ -67,7 +67,11 @@ var groupAnagrams2 = function (strs) {
     // if two words have the same string 'key', then they're anagrams
     let key = count.join("-");
 
-    res[key] ? res[key].push(str) : (res[key] = [str]);
+    if (res[key]) {
+      res[key].push(str);
+    } else {
+      res[key] = [str];
+    }
   }
 
   return Object.values(res);
