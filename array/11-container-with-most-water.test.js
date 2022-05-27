@@ -20,7 +20,7 @@ var maxArea = function (height) {
   let left = 0;
   let right = len - 1;
 
-  while (left < right && right < len) {
+  while (left < right) {
     const y1 = height[left];
     const y2 = height[right];
     const distance = right - left;
@@ -28,9 +28,12 @@ var maxArea = function (height) {
     const area = calcArea(y1, y2, distance);
     maxArea = Math.max(maxArea, area);
 
+    // we want to move our pointer away from the smaller value of the two
     if (y1 > y2) {
+      // if left is greater, move right
       right--;
     } else {
+      // if right is greater, move left
       left++;
     }
   }
@@ -40,6 +43,7 @@ var maxArea = function (height) {
 
 test("maxArea", () => {
   expect(maxArea([1, 8, 6, 2, 5, 4, 8, 3, 7])).toBe(49);
+  expect(maxArea([1, 1])).toBe(1);
 });
 
 // Time: O(N^2)
