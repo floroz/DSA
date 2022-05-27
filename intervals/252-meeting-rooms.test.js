@@ -5,6 +5,9 @@
  * and then COMPARE LAST END with NEXT START
  *
  * IF LAST END > NEXT START - then meeting cannot be attended
+ *
+ * Time: O (N log N)
+ * Space: O(1)
  */
 
 /**
