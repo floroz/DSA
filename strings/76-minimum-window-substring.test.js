@@ -56,9 +56,9 @@ var minWindow = function (s, t) {
   return min;
 };
 
-test("minWindowSlidingWindow", () => {
-  expect(minWindowSlidingWindow("ADOBECODEBANC", "ABC")).toBe("BANC");
-  expect(minWindowSlidingWindow("a", "a")).toBe("a");
-  expect(minWindowSlidingWindow("a", "aa")).toBe("");
-  expect(minWindowSlidingWindow("aa", "aa")).toBe("aa");
+test("minWindow", () => {
+  expect(minWindow("ADOBECODEBANC", "ABC")).toBe("BANC");
+  expect(minWindow("a", "a")).toBe("a");
+  expect(minWindow("a", "aa")).toBe("");
+  expect(minWindow("aa", "aa")).toBe("aa");
 });
