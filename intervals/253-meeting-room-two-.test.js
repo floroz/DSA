@@ -7,7 +7,7 @@
 function minMeetingRooms(intervals) {
   if (!intervals || !intervals.length) return 0;
 
-  // sort by start time
+  // sort by start time O(N log N)
   intervals.sort((a, b) => a[0] - b[0]);
 
   const bookingSystem = [];
@@ -52,6 +52,79 @@ test("minMeetingRooms", () => {
 
   expect(
     minMeetingRooms([
+      [0, 30],
+      [5, 10],
+      [15, 20],
+    ])
+  ).toBe(2);
+});
+
+/**
+ * Solution using MinHeap
+ */
+
+const minMeetingRooms_heap = (intervals) => {
+  const minHeap = new MinHeap();
+
+  intervals.sort((a, b) => a[0] - b[0]);
+
+  let maxRooms = 0;
+
+  intervals.forEach((interval) => {
+    const [start, end] = interval;
+
+    if (minHeap.size > 0 && minHeap.peek() <= start) {
+      minHeap.extract();
+    }
+
+    minHeap.insert(end);
+
+    maxRooms = Math.max(maxRooms, minHeap.size);
+  });
+
+  return maxRooms;
+};
+
+// since JS does not have a native heap,
+// for an interview you can quickly code-up something like this
+// letting interviewer know what you are doing
+class MinHeap {
+  constructor(compareFunc) {
+    this.compareFunc = compareFunc;
+    this.heap = [];
+  }
+
+  insert(val) {
+    this.heap.unshift(val);
+    this.heap.sort((a, b) => a - b);
+  }
+
+  extract() {
+    if (this.size === 0) return null;
+    return this.heap.shift();
+  }
+
+  peek() {
+    if (this.size === 0) return null;
+    return this.heap[0];
+  }
+
+  get size() {
+    return this.heap.length;
+  }
+}
+
+test("MinHeap _ minMeetingRooms", () => {
+  expect(
+    minMeetingRooms_heap([
+      [9, 10],
+      [4, 9],
+      [4, 17],
+    ])
+  ).toBe(2);
+
+  expect(
+    minMeetingRooms_heap([
       [0, 30],
       [5, 10],
       [15, 20],
