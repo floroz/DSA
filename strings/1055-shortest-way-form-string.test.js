@@ -30,7 +30,7 @@ var shortestWay = function (source, target) {
 };
 
 test("should first", () => {
-  // expect(shortestWay("abc", "abcbc")).toBe(2);
-  // expect(shortestWay("abc", "acdbc")).toBe(-1);
+  expect(shortestWay("abc", "abcbc")).toBe(2);
+  expect(shortestWay("abc", "acdbc")).toBe(-1);
   expect(shortestWay("xyz", "xzyxz")).toBe(3);
 });
