@@ -1,12 +1,62 @@
 // https://leetcode.com/problems/word-search-ii/
 
-// Given an m x n board of characters and a list of strings words, return all words on the board.
+var findWords = function (board, words) {
+  const trie = {},
+    res = [];
 
-// Each word must be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring.The same letter cell may not be used more than once in a word.
+  // Populate the Trie.
+  for (let word of words) {
+    let curNode = trie;
+    for (let char of word) curNode = curNode[char] = curNode[char] || {};
+    curNode.end = word;
+  }
 
-//   Example 1:
-// Input: board = [["o","a","a","n"],["e","t","a","e"],["i","h","k","r"],["i","f","l","v"]], words = ["oath","pea","eat","rain"]
-// Output: ["eat","oath"]
+  //Here we loop through entire board, if char at those coords is in
+  //our trie on the root level, we call our traverse function.
+  for (let row = 0; row < board.length; row++) {
+    for (let col = 0; col < board[row].length; col++) {
+      if (trie[board[row][col]]) traverse(row, col);
+    }
+  }
+
+  return res;
+
+  //Function takes row, col and node.  First time called, node is root
+  //level of our trie, as the function runs node stays in sync with where
+  //our recursive calls are at.
+  function traverse(row, col, node = trie) {
+    //Further down in this function we set board[row][col] to 0 before trying
+    //neighboring coordinates.  The line below keeps us from visiting the same
+    //cell more than once.
+    if (!board[row][col]) return;
+
+    //Here we capture the char on the board at coords, and we also move down
+    //within the trie to the level that matches that char.
+    const char = board[row][col],
+      curNode = node[char];
+
+    //If there is no curNode (I.e.- Current letter not within our trie node),
+    //we return, because our sequence of correct letters has been broken.
+    if (!curNode) return;
+
+    //If current node has the end property, we push the word that's the value
+    //for curNode.end (We set this above in the trie).  We then set end to
+    //null to keep from pushing the same word more than once.
+    if (curNode.end) {
+      res.push(curNode.end);
+      curNode.end = null;
+    }
+
+    //Here we set board[row][col] to 0 in order to keep track of where we
+    //have already visited.  Then we try all options and set it back afterward.
+    board[row][col] = 0;
+    col - 1 >= 0 && traverse(row, col - 1, curNode);
+    col + 1 < board[row].length && traverse(row, col + 1, curNode);
+    row - 1 >= 0 && traverse(row - 1, col, curNode);
+    row + 1 < board.length && traverse(row + 1, col, curNode);
+    board[row][col] = char;
+  }
+};
 
 /**
  * Brute force solution
@@ -88,86 +138,6 @@ test("findWords - brute force", () => {
   );
 });
 
-/**
- * Using Trie + DFS
- */
-class TrieNode {
-  constructor() {
-    this.children = new Map();
-    this.isWord = false;
-  }
-
-  addWord(word, node = this) {
-    if (!word) {
-      node.isWord = true;
-      return;
-    }
-
-    const char = word[0];
-
-    if (!node.children.has(char)) {
-      node.children.set(char, new TrieNode());
-    }
-
-    this.addWord(word.substr(1), node.children.get(char));
-  }
-}
-
-var findWords = function (board, words) {
-  if (!words || !words.length) return [];
-
-  const rows = board.length;
-  const cols = board[0].length;
-
-  const root = new TrieNode();
-
-  for (let w of words) {
-    root.addWord(w);
-  }
-
-  const find = (row, col, node) => {
-    // out of bounds
-    if (row < 0 || col < 0 || row >= rows || col >= cols) return false;
-
-    if (!board[row][col]) return false;
-
-    if (node.isWord) {
-      node.isWord = false;
-      return true;
-    }
-
-    const cell = board[row][col];
-    const childNode = node.children.get(cell);
-
-    if (!childNode || !cell) return false;
-
-    board[row][col] = 0; // invalidate cell so cannot be read twice during this search
-
-    const res =
-      find(row + 1, col, childNode) ||
-      find(row - 1, col, childNode) ||
-      find(row, col + 1, childNode) ||
-      find(row, col - 1, childNode);
-
-    board[row][col] = cell; // restore cell value before next iteration
-
-    return res;
-  };
-
-  const match = words.filter((word) => {
-    for (let i = 0; i < rows; i++) {
-      for (let j = 0; j < cols; j++) {
-        const res = find(i, j, root);
-        if (res) return true;
-
-        if (root.children.get(board[i][j] && find(i, j, root))) return true;
-      }
-    }
-    return false;
-  });
-
-  return match;
-};
 test("findWords - Trie + DFS", () => {
   expect(
     findWords(
