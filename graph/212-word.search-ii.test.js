@@ -1,21 +1,41 @@
 // https://leetcode.com/problems/word-search-ii/
 
-var findWords = function (board, words) {
-  const trie = {},
-    res = [];
+class TrieNode {
+  constructor() {
+    this.children = new Map();
+    this.isWord = false;
+  }
 
-  // Populate the Trie.
+  addWord(word, node = this) {
+    if (!word) {
+      node.isWord = true;
+      return;
+    }
+
+    const char = word[0];
+
+    if (!node.children.has(char)) {
+      node.children.set(char, new TrieNode());
+    }
+
+    this.addWord(word.substr(1), node.children.get(char));
+  }
+}
+
+var findWords = function (board, words) {
+  const trie = new TrieNode();
+  const res = [];
+
   for (let word of words) {
-    let curNode = trie;
-    for (let char of word) curNode = curNode[char] = curNode[char] || {};
-    curNode.end = word;
+    trie.addWord(word);
   }
 
   //Here we loop through entire board, if char at those coords is in
   //our trie on the root level, we call our traverse function.
   for (let row = 0; row < board.length; row++) {
     for (let col = 0; col < board[row].length; col++) {
-      if (trie[board[row][col]]) traverse(row, col);
+      const char = board[row][col];
+      if (trie.children.has(char)) traverse(row, col);
     }
   }
 
@@ -24,7 +44,7 @@ var findWords = function (board, words) {
   //Function takes row, col and node.  First time called, node is root
   //level of our trie, as the function runs node stays in sync with where
   //our recursive calls are at.
-  function traverse(row, col, node = trie) {
+  function traverse(row, col, node = trie, str = "") {
     //Further down in this function we set board[row][col] to 0 before trying
     //neighboring coordinates.  The line below keeps us from visiting the same
     //cell more than once.
@@ -32,31 +52,62 @@ var findWords = function (board, words) {
 
     //Here we capture the char on the board at coords, and we also move down
     //within the trie to the level that matches that char.
-    const char = board[row][col],
-      curNode = node[char];
+    const char = board[row][col];
+    const curNode = node.children.get(char);
 
     //If there is no curNode (I.e.- Current letter not within our trie node),
     //we return, because our sequence of correct letters has been broken.
     if (!curNode) return;
 
-    //If current node has the end property, we push the word that's the value
-    //for curNode.end (We set this above in the trie).  We then set end to
-    //null to keep from pushing the same word more than once.
-    if (curNode.end) {
-      res.push(curNode.end);
-      curNode.end = null;
+    // let's continue build the string we've search so far
+    // in our prefix tree
+    str += char;
+
+    //If current node is a Word, we push the word we build so far
+    // We then set end to null to keep from pushing the same word more than once.
+    if (curNode.isWord) {
+      res.push(str);
+      curNode.isWord = false;
     }
 
     //Here we set board[row][col] to 0 in order to keep track of where we
     //have already visited.  Then we try all options and set it back afterward.
     board[row][col] = 0;
-    col - 1 >= 0 && traverse(row, col - 1, curNode);
-    col + 1 < board[row].length && traverse(row, col + 1, curNode);
-    row - 1 >= 0 && traverse(row - 1, col, curNode);
-    row + 1 < board.length && traverse(row + 1, col, curNode);
+    col - 1 >= 0 && traverse(row, col - 1, curNode, str);
+    col + 1 < board[row].length && traverse(row, col + 1, curNode, str);
+    row - 1 >= 0 && traverse(row - 1, col, curNode, str);
+    row + 1 < board.length && traverse(row + 1, col, curNode, str);
     board[row][col] = char;
   }
 };
+
+test("findWords - Trie + DFS", () => {
+  expect(
+    findWords(
+      [
+        ["o", "a", "a", "n"],
+        ["e", "t", "a", "e"],
+        ["i", "h", "k", "r"],
+        ["i", "f", "l", "v"],
+      ],
+      ["oath", "pea", "eat", "rain"]
+    )
+  ).toEqual(expect.arrayContaining(["oath", "eat"]));
+
+  expect(
+    findWords(
+      [
+        ["a", "b"],
+        ["c", "d"],
+      ],
+      ["abcb"]
+    )
+  ).toEqual(expect.arrayContaining([]));
+
+  expect(findWords([["a", "a"], ["aaa"]], ["aaa"])).toEqual(
+    expect.arrayContaining([])
+  );
+});
 
 /**
  * Brute force solution
@@ -134,34 +185,6 @@ test("findWords - brute force", () => {
   ).toEqual(expect.arrayContaining([]));
 
   expect(findWords_brute([["a", "a"], ["aaa"]], ["aaa"])).toEqual(
-    expect.arrayContaining([])
-  );
-});
-
-test("findWords - Trie + DFS", () => {
-  expect(
-    findWords(
-      [
-        ["o", "a", "a", "n"],
-        ["e", "t", "a", "e"],
-        ["i", "h", "k", "r"],
-        ["i", "f", "l", "v"],
-      ],
-      ["oath", "pea", "eat", "rain"]
-    )
-  ).toEqual(expect.arrayContaining(["oath", "eat"]));
-
-  expect(
-    findWords(
-      [
-        ["a", "b"],
-        ["c", "d"],
-      ],
-      ["abcb"]
-    )
-  ).toEqual(expect.arrayContaining([]));
-
-  expect(findWords([["a", "a"], ["aaa"]], ["aaa"])).toEqual(
     expect.arrayContaining([])
   );
 });
