@@ -1,11 +1,4 @@
 // https://leetcode.com/problems/pacific-atlantic-water-flow
-// There is an m x n rectangular island that borders both the Pacific Ocean and Atlantic Ocean. The Pacific Ocean touches the island's left and top edges, and the Atlantic Ocean touches the island's right and bottom edges.
-
-// The island is partitioned into a grid of square cells. You are given an m x n integer matrix heights where heights[r][c] represents the height above sea level of the cell at coordinate (r, c).
-
-// The island receives a lot of rain, and the rain water can flow to neighboring cells directly north, south, east, and west if the neighboring cell's height is less than or equal to the current cell's height. Water can flow from any cell adjacent to an ocean into the ocean.
-
-// Return a 2D list of grid coordinates result where result[i] = [ri, ci] denotes that rain water can flow from cell (ri, ci) to both the Pacific and Atlantic oceans.
 
 /**
  *
@@ -33,33 +26,33 @@ export const pacificAtlantic = (heights) => {
   const rows = heights.length;
   const cols = heights[0].length;
 
-  // we need to separate DS to keep track of visited cells
+  // we need two separate DS to keep track of visited cells
   const pac_set = new Set();
   const atl_set = new Set();
 
-  const dfs = (r, c, set, prev_height) => {
+  const dfs = (row, col, set, prev_height) => {
     // already visited
-    if (set.has(toSetValue(r, c))) return;
+    if (set.has(toSetValue(row, col))) return;
 
     // out of bounds
-    if (r >= rows || c >= cols || r < 0 || c < 0) return;
+    if (row >= rows || col >= cols || row < 0 || col < 0) return;
 
     // water cannot flow
-    if (prev_height > heights[r][c]) return;
+    if (prev_height > heights[row][col]) return;
 
     // at this point we've visiting a new cell
-    set.add(toSetValue(r, c));
+    set.add(toSetValue(row, col));
 
     // run dfs on all neighbors
-    dfs(r + 1, c, set, heights[r][c]);
-    dfs(r - 1, c, set, heights[r][c]);
-    dfs(r, c + 1, set, heights[r][c]);
-    dfs(r, c - 1, set, heights[r][c]);
+    dfs(row + 1, col, set, heights[row][col]);
+    dfs(row - 1, col, set, heights[row][col]);
+    dfs(row, col + 1, set, heights[row][col]);
+    dfs(row, col - 1, set, heights[row][col]);
   };
 
-  for (let r = 0; r < rows; r++) {
-    dfs(r, 0, pac_set, heights[r][0]);
-    dfs(r, cols - 1, atl_set, heights[r][cols - 1]);
+  for (let row = 0; row < rows; row++) {
+    dfs(row, 0, pac_set, heights[row][0]);
+    dfs(row, cols - 1, atl_set, heights[row][cols - 1]);
   }
 
   for (let c = 0; c < cols; c++) {

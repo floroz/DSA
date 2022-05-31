@@ -1,7 +1,5 @@
 // https://leetcode.com/problems/number-of-islands/
-// Given an m x n 2D binary grid grid which represents a map of '1's(land) and '0's(water), return the number of islands.
 
-// An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.
 // Linear scan the 2d grid map, if a node contains a '1', then it is a root node that triggers a Depth First Search. During DFS, every visited node should be set as '0' to mark as visited node. Count the number of root nodes that trigger DFS, this number would be the number of islands since each DFS starting at some root identifies an island.
 
 // Time complexity : O(M×N) where M is the number of rows and N is the number of columns.
