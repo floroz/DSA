@@ -1,5 +1,9 @@
 // https://leetcode.com/problems/find-all-anagrams-in-a-string
-// For detail explanation, the same pattern and algorithm is explained in sliding-window/567-permutation-in-string.test.js
+
+/**
+ * THIS PROBLEM IS EXACTLY THE SAME ALGORITHM OF sliding-window/567-permutation-in-string.test.js
+ * CHECK THAT OUT FOR DETAILED EXPLANATION
+ */
 
 // Time Complexity: O(N) N is the input size of s
 // Space Complexity O(K) K is the input size of p (necessary to build our frequency map)
@@ -39,8 +43,6 @@ var findAnagrams = function (s, p) {
       frequencyMap.set(rightChar, newFreq);
     }
 
-    // if our window is not fully expanded yet
-    // let's move on with the next iteration
     if (right - left + 1 === windowSize) {
       const leftChar = s[left];
 
