@@ -27,12 +27,11 @@ var checkInclusion = function (s1, s2) {
 
   // our pointers
   let left = 0;
-  let right = 0;
 
   // fixed sliding window size
   let windowSize = s1.length;
 
-  while (right < s2.length) {
+  for (let right = 0; right < s2.length; right++) {
     // current character
     let char = s2[right];
 
@@ -75,12 +74,7 @@ var checkInclusion = function (s1, s2) {
         frequencyMap.set(leftChar, currentFreq + 1);
       }
 
-      // slide window
-      right++;
       left++;
-    } else {
-      // if our window is not yet expanded, we move only the right pointer
-      right++;
     }
   }
 
@@ -89,7 +83,7 @@ var checkInclusion = function (s1, s2) {
   return false;
 };
 
-test("checkInclusion ", () => {
+test("checkInclusion", () => {
   expect(checkInclusion("ab", "eidbaooo")).toBe(true);
   expect(checkInclusion("ab", "eidboaoo")).toBe(false);
 });
