@@ -1,7 +1,12 @@
 // https://leetcode.com/problems/longest-substring-without-repeating-characters/
 
-// Time Complexity = O(N)
-// Space Complexity = O(N)
+// Time Complexity O(N)
+
+// The time complexity of the above algorithm will be O(N) where ‘N’ is the number of characters in the input string.
+
+// Space Complexity  O(K) K = number of distinct character
+
+// The space complexity of the algorithm will be O(K) where K is the number of distinct characters in the input string.This also means K <= NK <= N, because in the worst case, the whole string might not have any repeating character so the entire string will be added to the HashMap.Having said that, since we can expect a fixed set of characters in the input string(e.g., 26 for English letters), we can say that the algorithm runs in fixed space O(1); in this case, we can use a fixed - size array instead of the HashMap.
 
 var lengthOfLongestSubstring = function (s) {
   // keep track of duplicate
