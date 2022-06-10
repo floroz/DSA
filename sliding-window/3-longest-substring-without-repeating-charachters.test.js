@@ -5,26 +5,27 @@
 
 var lengthOfLongestSubstring = function (s) {
   // keep track of duplicate
-  const seen = new Set();
+  const visited = new Set();
 
-  // left pointer
   let left = 0;
   // size of window/substring
   let windowSize = 0;
 
   // we look at each element with the right pointer
   for (let right = 0; right < s.length; right++) {
-    while (seen.has(s[right])) {
+    while (visited.has(s[right])) {
       // if the item on the right is in the set
       // we need to increase the left pointer until that's removed
-      seen.delete(s[left]);
+      visited.delete(s[left]);
       left++;
     }
 
     // once we don't have more duplicate
     // we add the current right and update the size of the window
-    seen.add(s[right]);
-    windowSize = Math.max(windowSize, right - left + 1);
+    visited.add(s[right]);
+
+    const currentSize = right - left + 1;
+    windowSize = Math.max(windowSize, currentSize);
   }
 
   return windowSize;

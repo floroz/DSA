@@ -4,7 +4,7 @@
  * Sliding Window - Two Pointers
  *
  * Time: O(N) derived from  O(N [the first while loop]+ N [the inner while to reduce the window])
- * Space: O(K) - K number of baskets
+ * Space: O(1) - K number of baskets is fixed and therefore constant, but if passed as variable to the function would change the Space Complexity to O(K)
  */
 
 /**
