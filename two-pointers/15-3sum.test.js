@@ -10,6 +10,9 @@
  * 4. Repeat process for every nums[i]
  */
 
+// Time Complexity O(N^2) - N is input nums, for every number we need to start a sliding window of O(N*N)  === O(N^2)
+// Space Complexity O(N) - size of the triplets
+
 /**
  * @param {number[]} nums
  * @return {number[][]}
