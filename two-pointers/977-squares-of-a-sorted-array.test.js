@@ -1,10 +1,10 @@
 // https://leetcode.com/problems/squares-of-a-sorted-array/submissions/
 
-// Time complexity
-// The time complexity of the above algorithm will be O(N)O(N) as we are iterating the input array only once.
+// Time complexity O(N)
+// The time complexity of the above algorithm will be O(N) as we are iterating the input array only once.
 
-// Space complexity
-// The space complexity of the above algorithm will also be O(N)O(N); this space will be used for the output array.
+// Space complexity O(N)
+// The space complexity of the above algorithm will also be O(N); this space will be used for the output array.
 
 /**
  * @param {number[]} nums
