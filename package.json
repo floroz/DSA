@@ -4,11 +4,11 @@
   "main": "index.js",
   "author": "Daniele Tortora <contact@danieletortora.com>",
   "license": "MIT",
-  "devDependencies": {
-    "@babel/preset-env": "^7.17.12",
-    "@types/jest": "^27.5.1",
-    "babel-jest": "^28.1.0",
-    "jest": "^28.1.0"
+  "scripts": {
+    "test": "vitest"
   },
-  "dependencies": {}
+  "devDependencies": {
+    "typescript": "^5.4.3",
+    "vitest": "^1.4.0"
+  }
 }
