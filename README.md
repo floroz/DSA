@@ -1,5 +1,5 @@
-### DS & Algorithm for JavaScript interview
+### Data Structures and Algorithms
 
-I am using this repo to document my journey in preparing for technical interviews.
+A collection of Data Structures and Algorithms in JavaScript (and TypeScript).
 
-It will contain most of the common LC problems and their solution in JavaScript (alongside notes and comments to quickly reference the solution and the strategy again)
+It contains the most of the common Leet Code problems and their solution with notes and observations.
