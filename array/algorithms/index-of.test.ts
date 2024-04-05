@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 
-// reproduction of Array.prototype.indexOf
+// equivalent to Array.prototype.indexOf
+// O(N)
 function indexOf(arr: any[], num: any): number{
     for(let i = 0; i < arr.length; i++){
         if(arr[i] === num){
