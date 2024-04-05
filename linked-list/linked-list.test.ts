@@ -1,18 +1,18 @@
 import { describe, it, expect } from 'vitest';
 
-class Node<T> {
-    constructor(public value: T | null, public next: Node<T> | null){
+class LinkedListNode<T> {
+    constructor(public value: T | null, public next: LinkedListNode<T> | null){
     }
 }
 
 class LinkedList<T> {
-    head: Node<T> | null = null;
-    tail: Node<T> | null = null;
+    head: LinkedListNode<T> | null = null;
+    tail: LinkedListNode<T> | null = null;
     length = 0;
 
     add(value: T){
         this.length++;
-        const insert = new Node(value, null)
+        const insert = new LinkedListNode(value, null)
 
         if (this.head == null) {
             this.head = insert;
@@ -31,7 +31,7 @@ class LinkedList<T> {
         return insert;
     }
 
-    pop(): Node<T> | null {
+    pop(): LinkedListNode<T> | null {
        if (this.length > 0) {
         this.length--
        }
@@ -53,7 +53,7 @@ class LinkedList<T> {
         return tmp;
     }   
 
-    unshift(): Node<T> | null {
+    unshift(): LinkedListNode<T> | null {
         if (this.length > 0) {
             this.length--
            }
