@@ -1,15 +1,12 @@
 // https://leetcode.com/problems/merge-k-sorted-lists/
-function ListNode(val, next) {
-  this.val = val === undefined ? 0 : val;
-  this.next = next === undefined ? null : next;
+import { describe, expect, it } from "vitest";
+
+
+class ListNode<T> {
+  constructor(public val?: T, public next: ListNode<T> | null = null) {}
+
 }
-/**
- * Definition for singly-linked list.
- * function ListNode(val, next) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.next = (next===undefined ? null : next)
- * }
- */
+
 /**
  * @param {ListNode[]} lists
  * @return {ListNode}
@@ -26,7 +23,7 @@ function mergeLists(a, b) {
       temp.next = b;
       b = b.next;
     }
-    temp = temp.next;
+    temp = temp.next as ListNode<number>;
   }
   if (a !== null) {
     temp.next = a;
@@ -51,3 +48,20 @@ var mergeKLists = function (lists) {
   }
   return lists[0];
 };
+
+describe("mergeKLists", () => {
+  it("should merge k lists", () => {
+    const a = new ListNode(1, new ListNode(4, new ListNode(5)));
+    const b = new ListNode(1, new ListNode(3, new ListNode(4)));
+    const c = new ListNode(2, new ListNode(6));
+    const result = mergeKLists([a, b, c]);
+    expect(result.val).toEqual(1);
+    expect(result.next.val).toEqual(1);
+    expect(result.next.next.val).toEqual(2);
+    expect(result.next.next.next.val).toEqual(3);
+    expect(result.next.next.next.next.val).toEqual(4);
+    expect(result.next.next.next.next.next.val).toEqual(4);
+    expect(result.next.next.next.next.next.next.val).toEqual(5);
+    expect(result.next.next.next.next.next.next.next.val).toEqual(6);
+  });
+});
