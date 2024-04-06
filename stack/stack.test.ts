@@ -25,6 +25,12 @@ class Stack<T> {
             this.size--
         }
 
+        if (this.size === 0) {
+            const head = this.head;
+            this.head = null;
+            return head?.value ?? null;
+        }
+
         const popped = this.head;
 
         this.head = popped?.next ?? null;
@@ -62,6 +68,19 @@ describe("Stack", () => {
         expect(stack.pop()).toBe(1);
         expect(stack.pop()).toBe(null);
     });
+
+    it("should return null if the stack is empty", () => {
+        const stack = new Stack<number>();
+        expect(stack.pop()).toBe(null);
+    })
+
+    it("should handle pop when only the head is present", () => {
+        const stack = new Stack<number>();
+        stack.push(1);
+
+        expect(stack.pop()).toBe(1);
+        expect(stack.pop()).toBe(null);
+    })
 
     it("should peek the top element of the stack", () => {
         const stack = new Stack<number>();
