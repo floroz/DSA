@@ -1,20 +1,15 @@
 // https://leetcode.com/problems/reverse-linked-list/
+import { describe, expect, it } from "vitest";
 
-function ListNode(val, next) {
-  this.val = val === undefined ? 0 : val;
-  this.next = next === undefined ? null : next;
+
+class ListNode<T> {
+  constructor(public val?: T, public next: ListNode<T> | null = null) {}
+
 }
 
 // Time: O(N) - one call for each node
 // Space: O(N) - one call on the stack for each node, and one new node for each one (2N) reduced to N
 
-/**
- * Definition for singly-linked list.
- * function ListNode(val, next) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.next = (next===undefined ? null : next)
- * }
- */
 /**
  * @param {ListNode} head
  * @return {ListNode}
@@ -67,3 +62,35 @@ var reverseList_iterative = function (head) {
 
   return prev;
 };
+
+describe("Reverse Linked List", () => {
+  it("should reverse a linked list", () => {
+    const head = new ListNode(
+      1,
+      new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5))))
+    );
+
+    const reversed = reverseList(head);
+
+    expect(reversed.val).toBe(5);
+    expect(reversed.next.val).toBe(4);
+    expect(reversed.next.next.val).toBe(3);
+    expect(reversed.next.next.next.val).toBe(2);
+    expect(reversed.next.next.next.next.val).toBe(1);
+  });
+
+  it("should reverse a linked list iteratively", () => {
+    const head = new ListNode(
+      1,
+      new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5))))
+    );
+
+    const reversed = reverseList_iterative(head);
+
+    expect(reversed.val).toBe(5);
+    expect(reversed.next.val).toBe(4);
+    expect(reversed.next.next.val).toBe(3);
+    expect(reversed.next.next.next.val).toBe(2);
+    expect(reversed.next.next.next.next.val).toBe(1);
+  });
+});
