@@ -13,23 +13,44 @@ class DoubleLinkList<T> {
   tail: DoubleLinkListNode<T> | null = null;
   size = 0;
 
+  /**
+   * O(1) time complexity
+   */
   append(value: T): void {
     this.size++;
 
-    const insert = new DoubleLinkListNode(value, null, null);
+    const node = new DoubleLinkListNode(value, null, null);
 
     if (!this.head || !this.tail) {
-      this.head = this.tail = insert;
+      this.head = this.tail = node;
       return;
     }
 
-    this.tail.next = insert;
-    insert.prev = this.tail;
-    this.tail = insert;
+    this.tail.next = node;
+    node.prev = this.tail;
+    this.tail = node;
 
     return;
   }
 
+  prepend(value: T): void {
+    this.size++;
+
+    const node = new DoubleLinkListNode(value, null, null);
+
+    if (!this.head || !this.tail) {
+      this.head = this.tail = node;
+      return;
+    }
+
+    node.next = this.head;
+    this.head.prev = node;
+    this.head = node;
+  }
+
+  /**
+   * O(1) time complexity
+   */
   deleteLast(): DoubleLinkListNode<T> | null {
     if (this.size > 0) {
       this.size--;
@@ -50,6 +71,9 @@ class DoubleLinkList<T> {
     return deletedNode;
   }
 
+  /**
+   * O(1) time complexity
+   */
   deleteFirst(): DoubleLinkListNode<T> | null {
     if (this.size > 0) {
       this.size--;
@@ -98,7 +122,9 @@ class DoubleLinkList<T> {
       return;
     }
 
-    if (!this.head) {
+    if (!this.head || index === 0) {
+      return this.prepend(value);
+    } else if (index === this.size - 1) {
       return this.append(value);
     }
 
@@ -242,5 +268,20 @@ describe("Double Linked List", () => {
     expect(linkedList.at(1)?.value).toBe(4);
     expect(linkedList.at(2)?.value).toBe(3);
     expect(linkedList.at(3)).toBeNull();
+  });
+
+  it("should prepend a node to the linked list", () => {
+    const linkedList = new DoubleLinkList<number>();
+
+    linkedList.append(1);
+    linkedList.append(2);
+    linkedList.append(3);
+
+    linkedList.prepend(0);
+
+    expect(linkedList.head?.value).toBe(0);
+    expect(linkedList.head?.next?.value).toBe(1);
+    expect(linkedList.head?.next?.next?.value).toBe(2);
+    expect(linkedList.head?.next?.next?.next?.value).toBe(3);
   });
 });
