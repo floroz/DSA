@@ -68,12 +68,12 @@ describe("Stack", () => {
     expect(stack.pop()).toBe(3);
     expect(stack.pop()).toBe(2);
     expect(stack.pop()).toBe(1);
-    expect(stack.pop()).toBe(null);
+    expect(stack.pop()).toBeUndefined();
   });
 
   it("should return null if the stack is empty", () => {
     const stack = new Stack<number>();
-    expect(stack.pop()).toBe(null);
+    expect(stack.pop()).toBeUndefined();
   });
 
   it("should handle pop when only the head is present", () => {
@@ -81,7 +81,7 @@ describe("Stack", () => {
     stack.push(1);
 
     expect(stack.pop()).toBe(1);
-    expect(stack.pop()).toBe(null);
+    expect(stack.pop()).toBeUndefined();
   });
 
   it("should peek the top element of the stack", () => {
@@ -96,6 +96,6 @@ describe("Stack", () => {
     stack.pop();
     expect(stack.peek()).toBe(1);
     stack.pop();
-    expect(stack.peek()).toBe(null);
+    expect(stack.peek()).toBeUndefined();
   });
 });

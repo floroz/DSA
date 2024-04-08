@@ -133,8 +133,8 @@ describe("linked list", () => {
   it("should be able to create a linked list", () => {
     const linkedList = new LinkedList();
     expect(linkedList).toBeInstanceOf(LinkedList);
-    expect(linkedList.head).toBeNull();
-    expect(linkedList.tail).toBeNull();
+    expect(linkedList.head).toBeUndefined();
+    expect(linkedList.tail).toBeUndefined();
   });
 
   it("should be able to add a node to the linked list", () => {
@@ -151,7 +151,7 @@ describe("linked list", () => {
     linkedList.append(3);
     expect(linkedList.head?.next?.value).toBe(2);
     expect(linkedList.head?.next?.next?.value).toBe(3);
-    expect(linkedList.head?.next?.next?.next).toBeNull();
+    expect(linkedList.head?.next?.next?.next).toBeUndefined();
     expect(linkedList.tail?.value).toBe(3);
   });
 
@@ -162,7 +162,7 @@ describe("linked list", () => {
     linkedList.append(3);
     const poppedNode = linkedList.deleteLast();
     expect(poppedNode?.value).toBe(3);
-    expect(linkedList.head?.next?.next).toBeNull();
+    expect(linkedList.head?.next?.next).toBeUndefined();
     expect(linkedList.tail?.value).toBe(2);
   });
 
@@ -188,7 +188,7 @@ describe("linked list", () => {
     expect(linkedList.at(0)?.value).toBe(1);
     expect(linkedList.at(1)?.value).toBe(2);
     expect(linkedList.at(2)?.value).toBe(3);
-    expect(linkedList.at(3)).toBeNull();
+    expect(linkedList.at(3)).toBeUndefined();
   });
 
   it("should be able to insert a node at a given index", () => {
@@ -207,6 +207,6 @@ describe("linked list", () => {
     expect(linkedList.at(0)?.value).toBe(1);
     expect(linkedList.at(1)?.value).toBe(4);
     expect(linkedList.at(2)?.value).toBe(3);
-    expect(linkedList.at(3)).toBeNull();
+    expect(linkedList.at(3)).toBeUndefined();
   });
 });

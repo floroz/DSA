@@ -155,8 +155,8 @@ describe("Double Linked List", () => {
   it("should be able to create a linked list", () => {
     const linkedList = new DoubleLinkList();
     expect(linkedList).toBeInstanceOf(DoubleLinkList);
-    expect(linkedList.head).toBeNull();
-    expect(linkedList.tail).toBeNull();
+    expect(linkedList.head).toBeUndefined();
+    expect(linkedList.tail).toBeUndefined();
   });
 
   it("should be able to add a node to the linked list", () => {
@@ -165,22 +165,22 @@ describe("Double Linked List", () => {
     linkedList.append(1);
 
     expect(linkedList.head?.value).toBe(1);
-    expect(linkedList.head?.prev).toBeNull();
-    expect(linkedList.head?.next).toBeNull();
+    expect(linkedList.head?.prev).toBeUndefined();
+    expect(linkedList.head?.next).toBeUndefined();
     expect(linkedList.tail?.value).toBe(1);
-    expect(linkedList.tail?.prev).toBeNull();
-    expect(linkedList.tail?.next).toBeNull();
+    expect(linkedList.tail?.prev).toBeUndefined();
+    expect(linkedList.tail?.next).toBeUndefined();
 
     linkedList.append(2);
 
     expect(linkedList.head?.value).toBe(1);
-    expect(linkedList.head?.prev).toBeNull();
+    expect(linkedList.head?.prev).toBeUndefined();
     expect(linkedList.head?.next?.value).toBe(2);
     expect(linkedList.head?.next?.prev?.value).toBe(1);
-    expect(linkedList.head?.next?.next).toBeNull();
+    expect(linkedList.head?.next?.next).toBeUndefined();
     expect(linkedList.tail?.value).toBe(2);
     expect(linkedList.tail?.prev?.value).toBe(1);
-    expect(linkedList.tail?.next).toBeNull();
+    expect(linkedList.tail?.next).toBeUndefined();
   });
 
   it("should set the correct references for the .next and .prev properties when adding a node", () => {
@@ -194,11 +194,11 @@ describe("Double Linked List", () => {
     expect(linkedList.head?.next?.prev?.value).toBe(1);
     expect(linkedList.head?.next?.next?.value).toBe(3);
     expect(linkedList.head?.next?.next?.prev?.value).toBe(2);
-    expect(linkedList.head?.next?.next?.next).toBeNull();
+    expect(linkedList.head?.next?.next?.next).toBeUndefined();
     expect(linkedList.head?.next?.next?.prev?.prev?.value).toBe(1);
     expect(linkedList.tail?.value).toBe(3);
     expect(linkedList.tail?.prev?.value).toBe(2);
-    expect(linkedList.tail?.next).toBeNull();
+    expect(linkedList.tail?.next).toBeUndefined();
   });
 
   it("should be able to pop the last node from the linked list", () => {
@@ -212,10 +212,10 @@ describe("Double Linked List", () => {
 
     expect(poppedNode?.value).toBe(3);
     expect(poppedNode?.prev?.value).toBe(2);
-    expect(linkedList.head?.next?.next).toBeNull();
+    expect(linkedList.head?.next?.next).toBeUndefined();
     expect(linkedList.tail?.value).toBe(2);
     expect(linkedList.tail?.prev?.value).toBe(1);
-    expect(linkedList.tail?.next).toBeNull();
+    expect(linkedList.tail?.next).toBeUndefined();
   });
 
   it("should be able to remove the first node from the linked list", () => {
@@ -228,14 +228,14 @@ describe("Double Linked List", () => {
     const removedNode = linkedList.deleteFirst();
 
     expect(removedNode?.value).toBe(1);
-    expect(removedNode?.prev).toBeNull();
+    expect(removedNode?.prev).toBeUndefined();
     expect(linkedList.head?.value).toBe(2);
-    expect(linkedList.head?.prev).toBeNull();
+    expect(linkedList.head?.prev).toBeUndefined();
     expect(linkedList.head?.next?.value).toBe(3);
     expect(linkedList.head?.next?.prev?.value).toBe(2);
     expect(linkedList.tail?.value).toBe(3);
     expect(linkedList.tail?.prev?.value).toBe(2);
-    expect(linkedList.tail?.next).toBeNull();
+    expect(linkedList.tail?.next).toBeUndefined();
   });
 
   it("should be able to access a node at a given index", () => {
@@ -248,7 +248,7 @@ describe("Double Linked List", () => {
     expect(linkedList.at(0)?.value).toBe(1);
     expect(linkedList.at(1)?.value).toBe(2);
     expect(linkedList.at(2)?.value).toBe(3);
-    expect(linkedList.at(3)).toBeNull();
+    expect(linkedList.at(3)).toBeUndefined();
   });
 
   it("should be able to insert a node at a given index", () => {
@@ -267,7 +267,7 @@ describe("Double Linked List", () => {
     expect(linkedList.at(0)?.value).toBe(1);
     expect(linkedList.at(1)?.value).toBe(4);
     expect(linkedList.at(2)?.value).toBe(3);
-    expect(linkedList.at(3)).toBeNull();
+    expect(linkedList.at(3)).toBeUndefined();
   });
 
   it("should prepend a node to the linked list", () => {

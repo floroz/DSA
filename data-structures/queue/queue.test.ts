@@ -72,7 +72,7 @@ describe("Queue", () => {
 
     const poppedElement = queue.dequeue();
 
-    expect(poppedElement).toBeNull();
+    expect(poppedElement).toBeUndefined();
   });
 
   it("should have correct memory references", () => {
@@ -84,7 +84,7 @@ describe("Queue", () => {
     expect(queue.head?.value).toBe(1);
     expect(queue.head?.next?.value).toBe(2);
     expect(queue.head?.next?.next?.value).toBe(3);
-    expect(queue.head?.next?.next?.next).toBeNull();
+    expect(queue.head?.next?.next?.next).toBeUndefined();
   });
 
   it("should return the head element without removing it", () => {
