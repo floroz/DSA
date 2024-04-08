@@ -1,12 +1,15 @@
 import { describe, it, expect } from "vitest";
 
 class LinkedListNode<T> {
-  constructor(public value: T | null, public next: LinkedListNode<T> | null) {}
+  constructor(
+    public value: T,
+    public next?: LinkedListNode<T>
+  ) {}
 }
 
 class LinkedList<T> {
-  head: LinkedListNode<T> | null = null;
-  tail: LinkedListNode<T> | null = null;
+  head?: LinkedListNode<T>;
+  tail?: LinkedListNode<T>;
   size = 0;
 
   /**
@@ -14,7 +17,7 @@ class LinkedList<T> {
    */
   append(value: T): void {
     this.size++;
-    const insert = new LinkedListNode(value, null);
+    const insert = new LinkedListNode(value);
 
     if (this.head == null) {
       this.head = insert;
@@ -35,13 +38,13 @@ class LinkedList<T> {
   /**
    * O(n) time complexity
    */
-  deleteLast(): LinkedListNode<T> | null {
+  deleteLast(): LinkedListNode<T> | undefined {
     if (this.size > 0) {
       this.size--;
     }
 
     if (!this.head) {
-      return null;
+      return;
     }
 
     let node = this.head;
@@ -51,7 +54,7 @@ class LinkedList<T> {
     }
     let tmp = node.next;
 
-    node.next = null;
+    node.next = undefined;
     this.tail = node;
 
     return tmp;
@@ -60,18 +63,18 @@ class LinkedList<T> {
   /**
    * O(1) time complexity
    */
-  deleteFirst(): LinkedListNode<T> | null {
+  deleteFirst(): LinkedListNode<T> | undefined {
     if (this.size > 0) {
       this.size--;
     }
 
     if (!this.head) {
-      return null;
+      return undefined;
     }
 
     if (!this.head.next) {
       let tmp = this.head;
-      this.head = null;
+      this.head = undefined;
       return tmp;
     }
 
@@ -83,9 +86,9 @@ class LinkedList<T> {
   /**
    * O(n) time complexity
    */
-  at(index: number): LinkedListNode<T> | null {
+  at(index: number): LinkedListNode<T> | undefined {
     if (index >= this.size || index < 0) {
-      return null;
+      return undefined;
     }
 
     let node = this.head;
@@ -112,8 +115,8 @@ class LinkedList<T> {
     }
 
     let count = 0;
-    let prev: LinkedListNode<T> | null = null;
-    let node: LinkedListNode<T> | null = this.head;
+    let prev: LinkedListNode<T> | undefined;
+    let node: LinkedListNode<T> | undefined = this.head;
 
     while (node && count < index) {
       count++;
@@ -121,7 +124,7 @@ class LinkedList<T> {
       node = node.next;
     }
 
-    const insert = new LinkedListNode(value, node?.next ?? null);
+    const insert = new LinkedListNode(value, node?.next);
     prev!.next = insert;
   }
 }

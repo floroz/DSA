@@ -2,15 +2,15 @@ import { describe, it, expect } from "vitest";
 
 class DoubleLinkListNode<T> {
   constructor(
-    public value: T | null,
-    public prev: DoubleLinkListNode<T> | null,
-    public next: DoubleLinkListNode<T> | null
+    public value: T,
+    public prev?: DoubleLinkListNode<T>,
+    public next?: DoubleLinkListNode<T>
   ) {}
 }
 
 class DoubleLinkList<T> {
-  head: DoubleLinkListNode<T> | null = null;
-  tail: DoubleLinkListNode<T> | null = null;
+  head?: DoubleLinkListNode<T>;
+  tail?: DoubleLinkListNode<T>;
   size = 0;
 
   /**
@@ -19,7 +19,7 @@ class DoubleLinkList<T> {
   append(value: T): void {
     this.size++;
 
-    const node = new DoubleLinkListNode(value, null, null);
+    const node = new DoubleLinkListNode(value);
 
     if (!this.head || !this.tail) {
       this.head = this.tail = node;
@@ -36,7 +36,7 @@ class DoubleLinkList<T> {
   prepend(value: T): void {
     this.size++;
 
-    const node = new DoubleLinkListNode(value, null, null);
+    const node = new DoubleLinkListNode(value);
 
     if (!this.head || !this.tail) {
       this.head = this.tail = node;
@@ -51,20 +51,20 @@ class DoubleLinkList<T> {
   /**
    * O(1) time complexity
    */
-  deleteLast(): DoubleLinkListNode<T> | null {
+  deleteLast(): DoubleLinkListNode<T> | undefined {
     if (this.size > 0) {
       this.size--;
     }
 
     if (!this.tail || !this.head) {
-      return null;
+      return undefined;
     }
 
     let deletedNode = this.tail;
     let previousNode = this.tail.prev;
 
     if (previousNode) {
-      previousNode.next = null;
+      previousNode.next = undefined;
     }
 
     this.tail = previousNode;
@@ -74,33 +74,33 @@ class DoubleLinkList<T> {
   /**
    * O(1) time complexity
    */
-  deleteFirst(): DoubleLinkListNode<T> | null {
+  deleteFirst(): DoubleLinkListNode<T> | undefined {
     if (this.size > 0) {
       this.size--;
     }
 
     if (!this.head) {
-      return null;
+      return undefined;
     }
 
     const node = this.head;
     const nextNode = node.next;
 
     if (nextNode) {
-      nextNode.prev = null;
+      nextNode.prev = undefined;
     }
 
     this.head = nextNode;
-    node.next = null;
+    node.next = undefined;
     return node;
   }
 
   /**
    * O(n) time complexity
    */
-  at(index: number): DoubleLinkListNode<T> | null {
+  at(index: number): DoubleLinkListNode<T> | undefined {
     if (index >= this.size || index < 0) {
-      return null;
+      return undefined;
     }
 
     let node = this.head;
@@ -128,7 +128,7 @@ class DoubleLinkList<T> {
       return this.append(value);
     }
 
-    let node: DoubleLinkListNode<T> | null = this.head;
+    let node: DoubleLinkListNode<T> | undefined = this.head;
     let count = 0;
 
     while (node && count < index) {

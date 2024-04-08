@@ -1,99 +1,101 @@
 import { describe, expect, it } from "vitest";
 
 class QueueNode<T> {
-    constructor(public value: T | null, public next: QueueNode<T> | null) {}
+  constructor(
+    public value: T,
+    public next?: QueueNode<T>
+  ) {}
 }
 
 class Queue<T> {
-    head: QueueNode<T> | null = null;
-    tail: QueueNode<T> | null = null;
-    size = 0;
+  head?: QueueNode<T>;
+  tail?: QueueNode<T>;
+  size = 0;
 
-    enqueue(value: T): void {
-        this.size++;
-        const node = new QueueNode(value, null);
+  enqueue(value: T): void {
+    this.size++;
+    const node = new QueueNode(value);
 
-        if (!this.tail) {
-            this.tail = node
-            this.head = this.tail
-            return;
-        } 
-
-         this.tail.next = node
-         this.tail = node;
-   
+    if (!this.tail) {
+      this.tail = node;
+      this.head = this.tail;
+      return;
     }
 
-    dequeue(): T | null {
-        if (!this.head) {
-            return null;
-        }
+    this.tail.next = node;
+    this.tail = node;
+  }
 
-        const head = this.head;
-        this.head = head.next;
-        this.size--;
-        // fake manual garbage collection operation - free up memory
-        head.next = null;
-
-        return head.value;
+  dequeue(): T | undefined {
+    if (!this.head) {
+      return;
     }
 
-    peek(): T | null {
-        return this.head?.value ?? null
-    }
+    const head = this.head;
+    this.head = head.next;
+    this.size--;
+    // fake manual garbage collection operation - free up memory
+    head.next = undefined;
+
+    return head.value;
+  }
+
+  peek(): T | undefined {
+    return this.head?.value;
+  }
 }
 
 describe("Queue", () => {
-    it("should push elements to the queue", () => {
-        const queue = new Queue<number>();
-        queue.enqueue(1);
-        queue.enqueue(2);
-        queue.enqueue(3);
+  it("should push elements to the queue", () => {
+    const queue = new Queue<number>();
+    queue.enqueue(1);
+    queue.enqueue(2);
+    queue.enqueue(3);
 
-        expect(queue.size).toBe(3);
-    });
+    expect(queue.size).toBe(3);
+  });
 
-    it("should pop elements from the queue", () => {
-        const queue = new Queue<number>();
-        queue.enqueue(1);
-        queue.enqueue(2);
-        queue.enqueue(3);
+  it("should pop elements from the queue", () => {
+    const queue = new Queue<number>();
+    queue.enqueue(1);
+    queue.enqueue(2);
+    queue.enqueue(3);
 
-        const value = queue.dequeue();
+    const value = queue.dequeue();
 
-        expect(value).toBe(1);
-        expect(queue.size).toBe(2);
-    });
+    expect(value).toBe(1);
+    expect(queue.size).toBe(2);
+  });
 
-    it("should return null when popping from an empty queue", () => {
-        const queue = new Queue<number>();
+  it("should return null when popping from an empty queue", () => {
+    const queue = new Queue<number>();
 
-        const poppedElement = queue.dequeue();
+    const poppedElement = queue.dequeue();
 
-        expect(poppedElement).toBeNull();
-    });
+    expect(poppedElement).toBeNull();
+  });
 
-    it("should have correct memory references", () => {
-        const queue = new Queue<number>();
-        queue.enqueue(1);
-        queue.enqueue(2);
-        queue.enqueue(3);
+  it("should have correct memory references", () => {
+    const queue = new Queue<number>();
+    queue.enqueue(1);
+    queue.enqueue(2);
+    queue.enqueue(3);
 
-        expect(queue.head?.value).toBe(1);
-        expect(queue.head?.next?.value).toBe(2);
-        expect(queue.head?.next?.next?.value).toBe(3);
-        expect(queue.head?.next?.next?.next).toBeNull();
-    });
+    expect(queue.head?.value).toBe(1);
+    expect(queue.head?.next?.value).toBe(2);
+    expect(queue.head?.next?.next?.value).toBe(3);
+    expect(queue.head?.next?.next?.next).toBeNull();
+  });
 
-    it("should return the head element without removing it", () => {
-        const queue = new Queue<number>();
-        queue.enqueue(1);
-        queue.enqueue(2);
-        queue.enqueue(3);
+  it("should return the head element without removing it", () => {
+    const queue = new Queue<number>();
+    queue.enqueue(1);
+    queue.enqueue(2);
+    queue.enqueue(3);
 
-        const value = queue.peek();
+    const value = queue.peek();
 
-        expect(value).toBe(1);
-        expect(queue.size).toBe(3);
-    });
+    expect(value).toBe(1);
+    expect(queue.size).toBe(3);
+  });
 });
