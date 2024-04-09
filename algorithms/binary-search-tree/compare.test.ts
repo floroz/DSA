@@ -1,14 +1,7 @@
 import { describe, expect, it } from "vitest";
+import { BSTNode } from "../../data-structures/binary-search-tree/bst-node";
 
-class BSTNode<T> {
-  constructor(
-    public value: T,
-    public left?: BSTNode<T>,
-    public right?: BSTNode<T>
-  ) {}
-}
-
-function isSameBinaryTree<T>(
+function compare<T>(
   node1: BSTNode<T> | undefined,
   node2: BSTNode<T> | undefined
 ): boolean {
@@ -24,44 +17,44 @@ function isSameBinaryTree<T>(
     return false;
   }
 
-  let left = isSameBinaryTree(node1.left, node2.left);
-  let right = isSameBinaryTree(node1.right, node2.right);
+  let left = compare(node1.left, node2.left);
+  let right = compare(node1.right, node2.right);
 
   return left && right;
 }
 
-describe("isSameTree", () => {
+describe("compare", () => {
   it("should return true for same trees", () => {
     expect(
-      isSameBinaryTree(
+      compare(
         new BSTNode(1, new BSTNode(2), new BSTNode(3)),
         new BSTNode(1, new BSTNode(2), new BSTNode(3))
       )
     ).toBe(true);
 
     expect(
-      isSameBinaryTree(
+      compare(
         new BSTNode(1, new BSTNode(2), new BSTNode(3)),
         new BSTNode(1, new BSTNode(2), new BSTNode(4))
       )
     ).toBe(false);
 
     expect(
-      isSameBinaryTree(
+      compare(
         new BSTNode(1, new BSTNode(2), new BSTNode(3)),
         new BSTNode(1, new BSTNode(2))
       )
     ).toBe(false);
 
     expect(
-      isSameBinaryTree(
+      compare(
         new BSTNode(1, new BSTNode(2)),
         new BSTNode(1, new BSTNode(2), new BSTNode(3))
       )
     ).toBe(false);
 
     expect(
-      isSameBinaryTree(
+      compare(
         new BSTNode(1, new BSTNode(2), new BSTNode(3)),
         new BSTNode(1, new BSTNode(2), new BSTNode(3, new BSTNode(4)))
       )

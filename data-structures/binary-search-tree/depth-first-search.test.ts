@@ -1,12 +1,6 @@
 import { describe, expect, it } from "vitest";
+import { BSTNode } from "./bst-node";
 
-class BSTNode<T> {
-  constructor(
-    public value: T,
-    public left?: BSTNode<T>,
-    public right?: BSTNode<T>
-  ) {}
-}
 // first root, then left, then right
 function preOrderTraversal<T>(
   node: BSTNode<T> | undefined | null,

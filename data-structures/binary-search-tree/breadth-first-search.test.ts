@@ -1,12 +1,5 @@
 import { describe, it, expect } from "vitest";
-
-class BSTNode<T> {
-  constructor(
-    public value: T,
-    public left?: BSTNode<T>,
-    public right?: BSTNode<T>
-  ) {}
-}
+import { BSTNode } from "./bst-node";
 
 function breadthFirstSearch<T>(
   tree: BSTNode<T> | undefined | null,
