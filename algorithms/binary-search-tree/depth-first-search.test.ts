@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { BSTNode } from "./bst-node";
+import { BSTNode } from "../../data-structures/binary-search-tree/bst-node";
 
 // first root, then left, then right
 function preOrderTraversal<T>(

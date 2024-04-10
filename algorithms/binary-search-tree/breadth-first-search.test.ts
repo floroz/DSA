@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { BSTNode } from "./bst-node";
+import { BSTNode } from "../../data-structures/binary-search-tree/bst-node";
 
 function breadthFirstSearch<T>(
   tree: BSTNode<T> | undefined | null,
