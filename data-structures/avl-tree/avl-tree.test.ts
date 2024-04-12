@@ -13,14 +13,14 @@ class AVLTree {
 }
 
 class AVLNode {
-  height: number;
+  height: number = 1;
+
   constructor(
     public value: number,
     public left?: AVLNode,
     public right?: AVLNode
-  ) {
-    this.height = 1;
-  }
+  ) {}
+
   add(value) {
     if (value < this.value) {
       // go left
