@@ -10,9 +10,10 @@ function binarySearch(arr: number[], item: number) {
   let mid = calculateMiddle(left, right);
 
   while (left < right) {
-    if (arr[mid] === item) {
+    const el = arr[mid]!;
+    if (el === item) {
       return mid;
-    } else if (item > arr[mid]) {
+    } else if (item > el) {
       left = mid + 1;
     } else {
       right = mid;

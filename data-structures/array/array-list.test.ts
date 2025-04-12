@@ -2,9 +2,11 @@ import { describe, it, expect } from "vitest";
 
 class ArrayList<T> {
   length = 0;
-  #arr = new Array<T>(this.capacity);
+  #arr: T[];
 
-  constructor(private capacity = 10) {}
+  constructor(private capacity = 10) {
+    this.#arr = new Array<T>(this.capacity);
+  }
 
   /**
    * Best case - O(1)
@@ -16,7 +18,7 @@ class ArrayList<T> {
 
       const newArr = new Array<T>(this.capacity);
       for (let i = 0; i < this.length; i++) {
-        newArr[i] = this.#arr[i];
+        newArr[i] = this.#arr[i]!;
       }
 
       this.#arr = newArr;
