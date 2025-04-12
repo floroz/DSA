@@ -24,6 +24,8 @@
     // "lib": ["es2022", "dom", "dom.iterable"],
     /* If you're using React */
     "jsx": "react-jsx", // Use the new JSX transform
+    /* Vite client types */
+    "types": ["vite/client"], // Add types for Vite features like import.meta.glob
     /* Path Aliases */
     "baseUrl": ".", // Base directory for path aliases
     "paths": {
