@@ -6,6 +6,7 @@ import { describe, expect, it } from "vitest";
  * Time complexity: O(n log n)
  * Space complexity: O(n)
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function _quickSort(arr: number[]) {
   if (arr.length <= 1) {
     return arr;
@@ -16,10 +17,10 @@ function _quickSort(arr: number[]) {
   const right: number[] = [];
 
   for (let i = 1; i < arr.length; i++) {
-    if (arr[i] < pivot) {
-      left.push(arr[i]);
+    if (arr[i]! < pivot!) {
+      left.push(arr[i]!);
     } else {
-      right.push(arr[i]);
+      right.push(arr[i]!);
     }
   }
 
@@ -28,17 +29,22 @@ function _quickSort(arr: number[]) {
 
 function partition(arr: number[], low: number, high: number) {
   const pivot = arr[high];
-  let i = low - 1;
+  // partitionIndex is the index of the smaller element
+  let partitionIndex = low - 1;
 
   for (let j = low; j < high; j++) {
-    if (arr[j] < pivot) {
-      i++;
-      [arr[i], arr[j]] = [arr[j], arr[i]]; // swap elements
+    if (arr[j]! < pivot!) {
+      partitionIndex++;
+      // swap arr[partitionIndex] and arr[j]
+      [arr[partitionIndex]!, arr[j]!] = [arr[j]!, arr[partitionIndex]!];
     }
   }
 
-  [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]]; // swap pivot to its correct position
-  return i + 1;
+  [arr[partitionIndex + 1]!, arr[high]!] = [
+    arr[high]!,
+    arr[partitionIndex + 1]!,
+  ]; // swap pivot to its correct position
+  return partitionIndex + 1;
 }
 
 /**
