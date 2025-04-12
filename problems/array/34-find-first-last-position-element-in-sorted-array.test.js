@@ -67,7 +67,11 @@ var searchRange = function (nums, target) {
 
     // nums[mid] <= target? l = mid : r = mid -1
     // the above will not work as it will run into infinite loop
-    nums[mid] <= target ? (left = mid + 1) : (right = mid);
+    if (nums[mid] <= target) {
+      left = mid + 1;
+    } else {
+      right = mid;
+    }
   }
 
   // after the second while loop, now l == nums.length - 1

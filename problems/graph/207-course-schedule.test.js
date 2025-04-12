@@ -85,7 +85,7 @@ export const canFinish1 = (numCourses, prerequisites) => {
    */
   const backtrack = (course) => {
     if (visited.has(course)) return false;
-    if (adjList.get(course) === []) return true;
+    if (!adjList.get(course) || adjList.get(course).length === 0) return true;
 
     // at this point we're visiting something new, so we keep track of it
     visited.add(course);

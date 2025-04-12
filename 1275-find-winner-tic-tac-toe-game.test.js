@@ -34,11 +34,15 @@ var tictactoe = function (moves) {
 
     // check status of game
     // if DFS returns true, current player has won
-    const validMoves = getValidMoves(player, row, col) === 3;
+    const validMoves = getValidMoves(player, row, col);
     if (validMoves === 3) return player === 1 ? "A" : "B";
 
     // change player for next round
-    player === 1 ? (player = 2) : (player = 1);
+    if (player === 1) {
+      player = 2;
+    } else {
+      player = 1;
+    }
   }
 
   return i < Math.min(maxPlay, moves.length) ? "Pending" : "Draw";

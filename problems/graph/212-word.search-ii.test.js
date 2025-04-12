@@ -73,10 +73,10 @@ var findWords = function (board, words) {
     //Here we set board[row][col] to 0 in order to keep track of where we
     //have already visited.  Then we try all options and set it back afterward.
     board[row][col] = 0;
-    col - 1 >= 0 && traverse(row, col - 1, curNode, str);
-    col + 1 < board[row].length && traverse(row, col + 1, curNode, str);
-    row - 1 >= 0 && traverse(row - 1, col, curNode, str);
-    row + 1 < board.length && traverse(row + 1, col, curNode, str);
+    if (col - 1 >= 0) traverse(row, col - 1, curNode, str);
+    if (col + 1 < board[row].length) traverse(row, col + 1, curNode, str);
+    if (row - 1 >= 0) traverse(row - 1, col, curNode, str);
+    if (row + 1 < board.length) traverse(row + 1, col, curNode, str);
     board[row][col] = char;
   }
 };
