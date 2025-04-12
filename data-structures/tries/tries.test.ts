@@ -89,7 +89,7 @@ class TrieNode {
       return this.isWord;
     }
 
-    let char = word[0];
+    const char = word[0];
     word = word.slice(1);
 
     const foundNode = this.children.find((node) => node.value === char);

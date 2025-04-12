@@ -10,7 +10,9 @@
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit",
+    "check:all": "npm run typecheck && npm run format:check && npm run lint"
   },
   "devDependencies": {
     "@vitest/ui": "^1.4.0",

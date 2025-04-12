@@ -17,8 +17,8 @@ function compare<T>(
     return false;
   }
 
-  let left = compare(node1.left, node2.left);
-  let right = compare(node1.right, node2.right);
+  const left = compare(node1.left, node2.left);
+  const right = compare(node1.right, node2.right);
 
   return left && right;
 }

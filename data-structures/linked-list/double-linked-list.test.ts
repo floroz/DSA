@@ -60,8 +60,8 @@ class DoubleLinkList<T> {
       return undefined;
     }
 
-    let deletedNode = this.tail;
-    let previousNode = this.tail.prev;
+    const deletedNode = this.tail;
+    const previousNode = this.tail.prev;
 
     if (previousNode) {
       previousNode.next = undefined;

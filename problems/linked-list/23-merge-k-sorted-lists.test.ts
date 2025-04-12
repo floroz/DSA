@@ -1,10 +1,11 @@
 // https://leetcode.com/problems/merge-k-sorted-lists/
 import { describe, expect, it } from "vitest";
 
-
 class ListNode<T> {
-  constructor(public val?: T, public next: ListNode<T> | null = null) {}
-
+  constructor(
+    public val?: T,
+    public next: ListNode<T> | null = null
+  ) {}
 }
 
 /**
@@ -34,15 +35,15 @@ function mergeLists(a, b) {
   return node.next;
 }
 
-var mergeKLists = function (lists) {
+const mergeKLists = function (lists) {
   if (lists.length === 0) {
     return null;
   }
   // two two
   // priority queue
   while (lists.length > 1) {
-    let a = lists.shift(); // the head will contains the "less" length list
-    let b = lists.shift(); // acturally, we can use the linkedlist to replace it, the while loop will be the while( list.header.next !== null || lists.length > 0)
+    const a = lists.shift(); // the head will contains the "less" length list
+    const b = lists.shift(); // acturally, we can use the linkedlist to replace it, the while loop will be the while( list.header.next !== null || lists.length > 0)
     const h = mergeLists(a, b);
     lists.push(h);
   }

@@ -31,12 +31,10 @@ class ArrayList<T> {
       return;
     }
 
-
     const value = this.#arr[this.length - 1];
 
     this.#arr[this.length - 1] = undefined as T;
     this.length--;
-
 
     return value;
   }

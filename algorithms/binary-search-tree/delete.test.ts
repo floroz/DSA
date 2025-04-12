@@ -55,7 +55,7 @@ function deleteNode<T>(
     }
 
     // both children - find the smallest on the right and swap to delete a leaf node
-    let smallest = smallestNode(root.right);
+    const smallest = smallestNode(root.right);
     root.value = smallest.value;
     deleteNode(root.right, smallest.value, root, "right");
   }

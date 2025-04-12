@@ -52,7 +52,7 @@ class LinkedList<T> {
     while (node.next?.next) {
       node = node.next;
     }
-    let tmp = node.next;
+    const tmp = node.next;
 
     node.next = undefined;
     this.tail = node;
@@ -73,7 +73,7 @@ class LinkedList<T> {
     }
 
     if (!this.head.next) {
-      let tmp = this.head;
+      const tmp = this.head;
       this.head = undefined;
       return tmp;
     }

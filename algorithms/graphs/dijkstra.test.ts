@@ -51,7 +51,7 @@ function findShortestPathLength(
           return visitedA[xA][yA] + visitedB[xA][yA] - 2; // Subtract 2 because we count the intersection point twice
         }
 
-        for (let [r, c] of dirs) {
+        for (const [r, c] of dirs) {
           queueA.push([xA + r, yA + c, stepsA + 1]);
         }
       }
@@ -72,7 +72,7 @@ function findShortestPathLength(
           return visitedA[xB][yB] + visitedB[xB][yB] - 2; // Subtract 2 because we count the intersection point twice
         }
 
-        for (let [r, c] of dirs) {
+        for (const [r, c] of dirs) {
           queueB.push([xB + r, yB + c, stepsB + 1]);
         }
       }

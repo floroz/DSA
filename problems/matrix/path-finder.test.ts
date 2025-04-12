@@ -93,18 +93,18 @@ describe("pathFinding", () => {
     ]);
   });
 
-    it("should return empty array if no path found", () => {
-        expect(
-        pathFinder(
-            [
-            ["O", "O", "O", "O"],
-            ["X", "X", "O", "X"],
-            ["O", "O", "O", "O"],
-            ["O", "O", "O", "X"],
-            ],
-            [0, 0],
-            [3, 3]
-        )
-        ).toEqual([]);
-    });
+  it("should return empty array if no path found", () => {
+    expect(
+      pathFinder(
+        [
+          ["O", "O", "O", "O"],
+          ["X", "X", "O", "X"],
+          ["O", "O", "O", "O"],
+          ["O", "O", "O", "X"],
+        ],
+        [0, 0],
+        [3, 3]
+      )
+    ).toEqual([]);
+  });
 });

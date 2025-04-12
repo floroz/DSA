@@ -1,10 +1,11 @@
 // https://leetcode.com/problems/reverse-linked-list/
 import { describe, expect, it } from "vitest";
 
-
 class ListNode<T> {
-  constructor(public val?: T, public next: ListNode<T> | null = null) {}
-
+  constructor(
+    public val?: T,
+    public next: ListNode<T> | null = null
+  ) {}
 }
 
 // Time: O(N) - one call for each node
@@ -14,7 +15,7 @@ class ListNode<T> {
  * @param {ListNode} head
  * @return {ListNode}
  */
-var reverseList = function (head) {
+const reverseList = function (head) {
   if (!head || !head.next) return head;
 
   const h = new ListNode();
@@ -45,14 +46,14 @@ var reverseList = function (head) {
   return h;
 };
 
-var reverseList_iterative = function (head) {
+const reverseList_iterative = function (head) {
   if (!head || !head.next) return head;
 
   let prev = null;
   let curr = head;
 
   while (curr) {
-    let tmp = curr.next;
+    const tmp = curr.next;
     // we shift our link to now point not at the next, but the previous value
     curr.next = prev;
     // we move our two pointers
