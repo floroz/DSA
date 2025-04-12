@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    /* Base Options: */
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "ES2022", // Use a recent ECMAScript target
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "isolatedModules": true,
+    /* Strictness */
+    "strict": true,
+    "noUncheckedIndexedAccess": true, // Recommended for stricter checks
+    "noImplicitAny": true, // Ensure all types are explicit or inferred
+    "strictNullChecks": true, // Handle null and undefined strictly
+    /* If NOT transpiling with TypeScript: */
+    "module": "preserve", // Keep import/export syntax for bundlers like Vite/Webpack
+    "noEmit": true, // Let the bundler handle compilation
+    /* If your code runs directly in Node.js (or you need types for Node.js APIs): */
+    // "module": "NodeNext", // Use Node.js native ESM support
+    // "moduleResolution": "NodeNext", // Align module resolution with Node.js ESM
+    // "outDir": "dist", // Specify output directory if compiling with tsc
+    /* If your code runs in the DOM: */
+    // "lib": ["es2022", "dom", "dom.iterable"],
+    /* If you're using React */
+    "jsx": "react-jsx", // Use the new JSX transform
+    /* Path Aliases */
+    "baseUrl": ".", // Base directory for path aliases
+    "paths": {
+      "@/*": ["./*"] // Example alias: @/components/* -> ./components/*
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"], // Files to include
+  "exclude": ["node_modules", "dist"] // Files/directories to exclude
+}
