@@ -1,18 +1,27 @@
 import { test, expect, describe } from "vitest";
 
-function debounce(func, wait) {
-  let interval;
+type Callback<T extends unknown[]> = (...args: T) => unknown;
 
-  return function (...args) {
-    const context = this;
+function debounce<T extends unknown[]>(
+  func: Callback<T>,
+  wait: number
+): Callback<T> {
+  let interval: number | undefined;
 
-    clearTimeout(interval);
+  return function (this: unknown, ...args: T) {
+    if (interval) {
+      clearTimeout(interval);
+    }
 
     interval = setTimeout(() => {
-      func.apply(context, args);
-      interval = null;
+      func.apply(this, args);
+      interval = 0;
     }, wait);
   };
+}
+
+interface Context {
+  val: number;
 }
 
 describe("debounce", () => {
@@ -21,7 +30,7 @@ describe("debounce", () => {
     expect(increment).toBeTruthy();
   });
 
-  test("executes after duration", (done) => {
+  test("executes after duration", async () => {
     let i = 0;
     const increment = debounce(() => {
       i++;
@@ -31,14 +40,16 @@ describe("debounce", () => {
     increment();
     expect(i).toBe(0);
 
-    setTimeout(() => {
-      expect(i).toBe(1);
-      done();
-    }, 20);
+    await new Promise((resolve) =>
+      setTimeout(() => {
+        expect(i).toBe(1);
+        resolve(null);
+      }, 20)
+    );
   });
 
   describe("uses arguments", () => {
-    test("called once", (done) => {
+    test("called once", async () => {
       let i = 21;
       const increment = debounce((a: number, b: number) => {
         i += a * b;
@@ -48,13 +59,15 @@ describe("debounce", () => {
       increment(3, 7);
       expect(i).toBe(21);
 
-      setTimeout(() => {
-        expect(i).toBe(42);
-        done();
-      }, 20);
+      await new Promise((resolve) =>
+        setTimeout(() => {
+          expect(i).toBe(42);
+          resolve(null);
+        }, 20)
+      );
     });
 
-    test("uses arguments of latest invocation", (done) => {
+    test("uses arguments of latest invocation", async () => {
       let i = 21;
       const increment = debounce((a: number, b: number) => {
         i += a * b;
@@ -65,14 +78,16 @@ describe("debounce", () => {
       increment(4, 5);
       expect(i).toBe(21);
 
-      setTimeout(() => {
-        expect(i).toBe(41);
-        done();
-      }, 20);
+      await new Promise((resolve) =>
+        setTimeout(() => {
+          expect(i).toBe(41);
+          resolve(null);
+        }, 20)
+      );
     });
   });
 
-  test("execute once even after calling it multiple times", (done) => {
+  test("execute once even after calling it multiple times", async () => {
     let i = 0;
     const increment = debounce(() => {
       i++;
@@ -90,13 +105,15 @@ describe("debounce", () => {
       expect(i).toBe(0);
     }, 10);
 
-    setTimeout(() => {
-      expect(i).toBe(1);
-      done();
-    }, 30);
+    await new Promise((resolve) =>
+      setTimeout(() => {
+        expect(i).toBe(1);
+        resolve(null);
+      }, 30)
+    );
   });
 
-  test("duration extended if called again during window", (done) => {
+  test("duration extended if called again during window", async () => {
     let i = 0;
     const increment = debounce(() => {
       i++;
@@ -114,20 +131,25 @@ describe("debounce", () => {
       expect(i).toBe(0);
     }, 50);
 
-    setTimeout(() => {
-      // Still 0 because we fired again at t=50, increment will only happen at t=150
-      expect(i).toBe(0);
-    }, 125);
+    await new Promise((resolve) =>
+      setTimeout(() => {
+        // Still 0 because we fired again at t=50, increment will only happen at t=150
+        expect(i).toBe(0);
+        resolve(null);
+      }, 125)
+    );
 
-    setTimeout(() => {
-      expect(i).toBe(1);
-      done();
-      // Add a longer delay because the browser timer is unreliable.
-    }, 1500);
+    await new Promise((resolve) =>
+      setTimeout(() => {
+        expect(i).toBe(1);
+        resolve(null);
+        // Add a longer delay because the browser timer is unreliable.
+      }, 1500)
+    );
   });
 
-  test("callbacks can access `this`", (done) => {
-    const increment = debounce(function (this: any, delta: number) {
+  test("callbacks can access `this`", async () => {
+    const increment = debounce(function (this: Context, delta: number) {
       this.val += delta;
     }, 10);
 
@@ -140,9 +162,11 @@ describe("debounce", () => {
     obj.increment(3);
     expect(obj.val).toBe(2);
 
-    setTimeout(() => {
-      expect(obj.val).toBe(5);
-      done();
-    }, 20);
+    await new Promise((resolve) =>
+      setTimeout(() => {
+        expect(obj.val).toBe(5);
+        resolve(null);
+      }, 20)
+    );
   });
 });
