@@ -1,16 +1,14 @@
 import { useState } from 'react'
-import Counter from './challenges/01-counter'
-import AnotherChallenge from './challenges/02-another'
+import { TodoList } from './challenges/todo-list';
 
 const componentMap = {
-  'counter': Counter,
-  'another': AnotherChallenge
+  'todo-list': TodoList
 }
 
 type ChallengeKey = keyof typeof componentMap;
 
 function App() {
-  const [currentChallengeKey, setCurrentChallengeKey] = useState<ChallengeKey>('counter');
+  const [currentChallengeKey, setCurrentChallengeKey] = useState<ChallengeKey>('todo-list');
 
   // Get the component type based on the key
   const ComponentToRender = componentMap[currentChallengeKey];
