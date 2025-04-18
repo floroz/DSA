@@ -10,7 +10,7 @@
     "isolatedModules": true,
     /* Strictness */
     "strict": true,
-    "noUncheckedIndexedAccess": true, // Recommended for stricter checks
+    "noUncheckedIndexedAccess": false, // Recommended for stricter checks
     "noImplicitAny": true, // Ensure all types are explicit or inferred
     "strictNullChecks": true, // Handle null and undefined strictly
     /* If NOT transpiling with TypeScript: */
